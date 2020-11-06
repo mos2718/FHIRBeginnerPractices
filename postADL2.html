@@ -1,0 +1,489 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title></title>
+
+    <script src="setting.js"></script>
+    <script src="Cookie.js"></script>
+    <script src="HTTP2019.js"></script>
+    <script>
+
+
+        var myObj = {
+            "resourceType": "QuestionnaireResponse",
+            "status": "completed",
+            "subject": {
+                "reference": "Patient/1478659"
+            },
+            "authored": "2020-02-17T12:20:17.1151Z",
+            "item": [{
+                "linkId": "1",
+                "text": "進食?",
+                "answer": [{
+                    "valueInteger": 0
+                }]
+            }, {
+                "linkId": "2",
+                "text": "移動",
+                "answer": [{
+                    "valueInteger": 0
+                }]
+            }, {
+                "linkId": "3",
+                "text": "修飾",
+                "answer": [{
+                    "valueInteger": 0
+                }]
+            }, {
+                "linkId": "4",
+                "text": "如廁",
+                "answer": [{
+                    "valueInteger": 0
+                }]
+            }, {
+                "linkId": "5",
+                "text": "沐浴",
+                "answer": [{
+                    "valueInteger": 0
+                }]
+            }, {
+                "linkId": "6",
+                "text": "步行",
+                "answer": [{
+                    "valueInteger": 0
+                }]
+            }, {
+                "linkId": "7",
+                "text": "上下樓梯",
+                "answer": [{
+                    "valueInteger": 0
+                }]
+            }, {
+                "linkId": "8",
+                "text": "穿脫衣服",
+                "answer": [{
+                    "valueInteger": 0
+                }]
+            }, {
+                "linkId": "9",
+                "text": "大便控制",
+                "answer": [{
+                    "valueInteger": 0
+                }]
+            }, {
+                "linkId": "10",
+                "text": "小便控制",
+                "answer": [{
+                    "valueInteger": 0
+                }]
+            }]
+        };
+
+        // myObj.item[0].answer[0].valueString
+        function postData() {
+
+            //myObj.subject.reference = "Patient/" + document.getElementById("FHIRPtionID").value;
+            //第一種寫法 getElementById
+            //   if(document.getElementById("rd_eating_1").checked == true)
+            //      { myObj.item[0].answer[0].valueInteger =10;     }
+            //   if(document.getElementById("rd_eating_2").checked == true)
+            //      { myObj.item[0].answer[0].valueInteger =5 ;      }  
+            //   if(document.getElementById("rd_eating_3").checked == true)
+            //      { myObj.item[0].answer[0].valueInteger =0 ;            }
+
+            //   if(document.getElementById("rd_moving_1").checked == true)
+            //      { myObj.item[1].answer[0].valueInteger =15;     }
+            //   if(document.getElementById("rd_moving_2").checked == true)
+            //      { myObj.item[1].answer[0].valueInteger =10;      }  
+            //   if(document.getElementById("rd_moving_3").checked == true)
+            //      { myObj.item[1].answer[0].valueInteger =5;            }
+            //   if(document.getElementById("rd_moving_4").checked == true)
+            //      { myObj.item[1].answer[0].valueInteger =0;      }        
+            //   var jsonStr = JSON.stringify(myObj);
+            //   alert(jsonStr);
+
+            //第二種寫法 getElementByName
+            // var rd_eating = document.getElementsByName("rd_moving");    
+            // alert(rd_eating.length);
+            // for (var k = 0; k < rd_eating.length; k++) {
+            // if (rd_eating[k].checked){
+            //     myObj.item[0].answer[0].valueInteger =10;
+            //     alert(rd_eating[k].value);
+            // }
+            // }
+
+            //第三種寫法 getElementsByTagName
+            var count = 0; //計數器
+            var Str = "";
+            var Total_Obj = document.getElementsByTagName("input");  
+            //alert(Total_Obj.length);
+            for (var k = 0; k < Total_Obj.length; k++) {
+                if (Total_Obj[k].type == "radio") {
+                    if (Total_Obj[k].checked) {
+                        Str = Total_Obj[k].value;
+                        if (Str != "") {
+                            //answer[count] = Str;//text;
+                            myObj.item[count].answer[0].valueInteger = Str;
+                            count++;
+                             //alert(Str);
+                        }
+                    }
+                }
+            }
+            var jsonStr = JSON.stringify(myObj);
+            alert(jsonStr);
+
+            var apiURL;
+            apiURL = FHIRrootURL + "/QuestionnaireResponse";
+            HTTPPostData(apiURL, jsonStr);
+
+        }
+        //http://hapi.fhir.org/baseR4/QuestionnaireResponse/1604735
+        //http://hapi.fhir.org/baseR4/QuestionnaireResponse/1609353
+        function getData() {
+            //取得填答
+            HTTPGetData(FHIRrootURL + "/QuestionnaireResponse/1609353");
+            var data = JSON.parse(ret);
+            var tb1 = document.getElementById("tb1");
+            alert(data.item[0].answer[0].valueInteger);
+            if(data.item[0].answer[0].valueInteger==10)
+             { 
+                document.getElementById("rd_eating_1").checked=true;   
+             }
+             if(data.item[0].answer[0].valueInteger==5)
+             { 
+                document.getElementById("rd_eating_2").checked=true;  
+             }
+             if(data.item[0].answer[0].valueInteger==0)
+             { 
+                document.getElementById("rd_eating_3").checked=true;
+             }
+             
+            //將答案依序讀取出來
+            // for (i = 0; i < data.item.length; i++) {
+            //     var obj = data.item[i];
+            //     var ans = obj.answer[0].valueInteger;
+            //     //alert(ans);       
+            //     //把資料寫入radiobutton 
+            //     var item = tb1.rows[i].getElementsByTagName("input");
+            //     //alert(item.length);
+            //         for (k = 0; k < item.length; k++) {
+            //             if (item[k].value == ans) {
+            //                 item[k].checked = true;
+            //             }                       
+            //         }
+                    
+            // }
+            //alert(data);
+        }
+
+        function clearData() {
+            var Total_Obj = document.getElementsByTagName("input");
+            // var question=document.getElementsByName("qtext");
+            for (var k = 0; k < Total_Obj.length; k++) {
+                if (Total_Obj[k].type == "radio") {
+                    if (Total_Obj[k].checked) {
+                        Total_Obj[k].checked = false;
+                    }
+                }
+            }
+        }
+
+    </script>
+
+</head>
+
+<body style="height: 780px">
+
+    FHIR patient id:
+    <input type="text" value="unknown" id="FHIRPtionID" /> <br />
+
+    <p>ADL 量表</p>
+
+    <input id="btnClear" onclick="clearData()" type="button" value="clearData" />
+    <input id="btnGetdata" onclick="getData()" type="button" value="getData" />
+    <input id="Button1" onclick="postData()" type="button" value="postData" /><br /> <br />
+
+    <table width="100%" id="tb1" style="table-layout: fixed" border="1">
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label name="qtext">1.進食</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_eating" id="rd_eating_1" value="10" checked="checked" />(10)
+                            自己在合理的時間內(約十秒鐘吃一口)可用筷子取食眼前的食物。若需進食輔具時，應會自行穿脫。
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_eating" id="rd_eating_2" value="5" />(5) 需別人幫忙穿脫輔具或只會用湯匙進食。
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_eating" id="rd_eating_3" value="0" />(0) 無法自行取食或耗費時間過長。
+                        </label>
+                    </div>
+
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label id="qtext">2.移動</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_moving" id="rd_moving_1" value="15" checked="checked" />(15)
+                            可獨立完成，包括輸椅的煞車及移開腳踏板。
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_moving" id="rd_moving_2" value="10" />(10)
+                            需要稍微的協助(例如:予以輕扶以保持平衡)或需要口頭指導。
+
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_moving" id="rd_moving_3" value="5" />(5) 可自行從床上坐起來，但移位時仍需別人幫忙
+
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_moving" id="rd_moving_4" value="0" />(0) 需別人幫忙方可坐起來或移位。
+
+                        </label>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label>3. 修飾</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_grooming" id="rd_grooming_1" value="5" checked="checked" />(5)
+                            可獨立完成洗臉、洗手、刷牙及梳頭髮。
+
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_grooming" id="rd_grooming_2" value="0" />(0) 需要別人幫忙。
+
+                        </label>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label>4. 如廁</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_ toilettransfer" id="rd_ toilettransfer_1" value="10"
+                                checked="checked" />(10) 可自行進出廁所，不會弄髒衣物，並能穿好衣服。使用便盆者，可自行清理便盆。
+
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_ toilettransfer" id="rd_ toilettransfer_2" value="5" />(5)
+                            需幫忙保持姿勢的平衡，整理衣物或使用衛生紙。
+
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_ toilettransfer" id="rd_ toilettransfer_3" value="0" />(0)
+                            需他人幫忙。
+
+                        </label>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label>5. 沐浴</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_wash" id="rd_wash_1" value="5" checked="checked" />(5)
+                            可獨立完成(不論是盆浴或沐浴)。
+
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_wash" id="rd_wash_2" value="0" />(0) 需要別人幫忙。
+
+                        </label>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label>6. 步行</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_walk" id="rd_walk _1" value="15" checked="checked" />(15)
+                            使用或不使用輔具皆可獨立行走50公尺以上。
+
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_walk" id="rd_walk _2" value="10" />(10) 需要稍微的扶持或口頭指導方可行走50公尺以上。
+
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_walk" id="rd_walk_3" value="5" />(5)
+                            雖無法行走，但可獨立操縱輪椅(包括轉彎、進門、及接近桌子、床沿)並可推行輪椅50公尺以上。
+
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_walk" id="rd_walk_4" value="0" />(0) 需別人幫忙推輪椅。
+
+                        </label>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label>7. 上下樓梯</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_climbingofstairs" id="rd_climbingofstairs _1" value="10"
+                                checked="checked" />(10) 可自行上下樓梯(允許抓扶手、用拐杖)。
+
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_climbingofstairs" id="rd_climbingofstairs _2" value="5" />(5)
+                            需要稍微幫忙或口頭指導。
+
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_climbingofstairs" id="rd_climbingofstairs _3" value="0" />(0)
+                            無法上下樓梯。
+
+                        </label>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label>8. 穿脫衣服</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_ buttoningclothes" id="rd_ buttoningclothes_1" value="10"
+                                checked="checked" />(10) 可自行穿脫衣服、鞋子及輔具。
+
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_ buttoningclothes" id="rd_ buttoningclothes_2" value="5" />(5)
+                            在別人幫忙下，可自行完成一半以上的動作。
+
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_ buttoningclothes" id="rd_ buttoningclothes_3" value="0" />(0)
+                            需別人幫忙。
+
+                        </label>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label>9. 大便控制</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_fecalincontinence" id="rd_fecalincontinence_1" value="10"
+                                checked="checked" />(10) 不會失禁，並可自行使用塞劑。
+
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_fecalincontinence" id="rd_fecalincontinence_2" value="5" />(5)
+                            偶爾會失禁(每週不超過一次)或使用塞劑時需人幫助。
+
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_fecalincontinence" id="rd_fecalincontinence_3" value="0" />(0)
+                            需別人處理。
+
+                        </label>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <label>10. 小便控制</label>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_urinaryincontinence" id="rd_urinaryincontinence_1" value="10"
+                                checked="checked" />(10) 日夜皆不會尿失禁，或可自行使用並清理尿套。
+
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_urinaryincontinence" id="rd_urinaryincontinence_2"
+                                value="5" />(5) 偶爾會尿失禁(每週不超過一次)或尿急(無法等待便盆或無法即時趕到廁所)或需別人幫忙處理尿套。
+
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label>
+                            <input type="radio" name="rd_urinaryincontinence" id="rd_urinaryincontinence_3"
+                                value="0" />(0) 需別人處理。
+
+                        </label>
+                    </div>
+                </div>
+            </td>
+        </tr>
+
+    </table>
+
+</body>
+<script>
+    document.getElementById("FHIRPtionID").value = getCookie("patientID");
+    document.getElementById("name").value = getCookie("patientName");
+
+</script>
+
+</html>

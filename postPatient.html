@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+   
+	<script src="setting.js"></script>
+    <script src="HTTP2019.js"></script>
+ <script>
+     var myObj = {
+        "resourceType": "Patient",
+        "name": [
+          {  "text": "林小妹",
+              "family": "",
+              "given": [""]
+          }
+         ],
+         "gender": "",
+         "birthDate": "1924-10-10",
+         "managingOrganization": {
+             "reference": "Organization/632757"
+         }
+     };
+     
+	 
+   function postData() {
+     /*   var data = myObj.valueQuantity.value;
+       alert(data);  */
+       myObj.name[0].family = document.getElementById("familyName").value;
+       myObj.name[0].given[0] = document.getElementById("givenName").value;
+       myObj.name[0].text =  myObj.name[0].family + myObj.name[0].given[0];
+       myObj.birthDate = document.getElementById("birthDate").value;
+
+
+       if(document.getElementById("genderMale").checked == true)
+           {myObj.gender = "male";    }
+       else if(document.getElementById("genderFemale").checked == true)
+           {myObj.gender = "female";    }  
+
+       var jsonStr = JSON.stringify(myObj);
+     //  alert(jsonStr);
+
+       var apiURL;
+       apiURL = FHIRrootURL + '/' + "Patient";
+     //  alert(apiURL);
+       HTTPPostData(apiURL, jsonStr);
+     
+	
+
+	}
+
+
+</script>	
+	
+</head>
+<body style="height: 780px">
+
+   
+     <input id="Button1" onclick="postData()"  type="button" value="postData" /> <br/>
+      <br/>
+      Family name: <input type="text" id="familyName" />  <br/> <br/>
+      Given  name: <input type="text" id="givenName" />  <br/>
+      <br/>
+      Gender: <br/>
+      男<input type="radio" name="gender" id="genderMale"><br/>
+      女<input type="radio" name="gender" id="genderFemale">
+       <br/><br/>
+      Birth Day  name: <input type="text" id="birthDate" /> Eg. 1924-10-10 <br/>
+  
+</body>
+
+</html>

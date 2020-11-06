@@ -1,0 +1,36 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+   
+  <script src="setting.js"></script>
+  <script src="HTTP2019.js"></script>
+  <script src="Temperature.js"></script>
+ 
+ <script>
+   function postData() {
+    bodyTemperature.subject.reference =   "Patient/"  +  document.getElementById("FHIRPtionID").value;
+    bodyTemperature.valueQuantity.value = parseFloat(document.getElementById("bodyTemperature").value);
+   
+    var jsonStr = JSON.stringify(bodyTemperature);
+   // alert(jsonStr);
+    var url = "http://hapi.fhir.org/baseR4/Observation";
+    var apiURL;
+    apiURL = FHIRrootURL + '/' + "Observation";
+
+    HTTPPostData(url,jsonStr);
+   } 
+  
+	
+</script>	
+	
+</head>
+<body style="height: 780px">
+    FHIR patient id:
+    <input type="text"  value="unknown" id="FHIRPtionID"/>  <br/>
+    <input id="Button1" onclick="postData()"  type="button" value="postData" /><br/>
+    體溫: <input type="text" id="bodyTemperature" />  <br/>
+</body>
+
+</html>

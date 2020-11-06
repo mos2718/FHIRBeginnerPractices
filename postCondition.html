@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+   
+  <script src="setting.js"></script>
+  <script src="Cookie.js"></script> 
+  <script src="HTTP2019.js"></script>
+ <script>
+
+  
+     /* var gender;
+      gender = getCookie("gender");
+      if (gender == "male")
+      { document.getElementById("gm").checked = true; }
+      else
+      { document.getElementById("gf").checked = true; }
+*/
+
+
+   var myObj = {
+  "resourceType": "Condition", 
+  "severity": {
+    "coding": [
+      {
+        "system": "http://MISAT.org.tw/conSeverity",
+        "code": "moderate",
+        "display": "moderate"
+      }
+    ]
+  },
+  "code": {
+    "coding": [
+      {
+        "system": "http://snomed.info/ct",
+        "code": "195917001",
+        "display": "asthma"
+      }
+    ],
+    "text": "asthma"
+  },
+  "subject": {
+    "reference": "Patient/18200"
+  },
+  "onsetAge": {
+    "value": 14,
+    "system": "http://unitsofmeasure.org",
+    "code": "a"
+  }
+};
+
+
+   
+	 
+   function postData() {
+   alert( myObj.code.coding[0].code);
+   if(document.getElementById("Con1").checked == true)
+   {
+     var subRef = "Patient/";
+     
+    myObj.subject.reference =   subRef  +  document.getElementById("FHIRPtionID").value;
+    myObj.onsetAge.value = document.getElementById("Con1Age").value 
+    myObj.onsetAge.code ="abc";
+   if(document.getElementById("Con1Mild").checked == true)
+     {myObj.severity.coding[0].code = "Mild";
+     myObj.severity.coding[0].display =  "Mild";       }
+   if(document.getElementById("Con1Moderate").checked == true)
+     {myObj.severity.coding[0].code = "Moderate";
+     myObj.severity.coding[0].display =  "Moderate";       }
+   if(document.getElementById("Con1Severe").checked == true)
+     {myObj.severity.coding[0].code = "Moderate";
+     myObj.severity.coding[0].display =  "Moderate";       }
+
+     var jsonStr = JSON.stringify(myObj);
+       alert(jsonStr);
+
+    /*   var apiURL;
+       apiURL = FHIRrootURL + '/' + "Condition";
+        HTTPPostData(apiURL, jsonStr);  */
+     
+
+   } 
+  
+	
+
+	}
+
+
+</script>	
+	
+</head>
+<body style="height: 780px">
+   
+    FHIR patient id:
+    <input type="text"  value="unknown" id="FHIRPtionID"/>  <br/>
+
+    <p>過去病史及健康狀況</p>
+   
+     <input id="Button1" onclick="postData()"  type="button" value="postData" /><br/>
+     哮喘:<input type="checkbox" id="Con1" name="asthma" value="195917001">&nbsp;&nbsp;
+     嚴重程度:
+  <input id="Con1Mild"  type="radio" name="severity" value="Mild">輕度 &nbsp;
+  <input id="Con1Moderate" type="radio" name="severity" value="Moderate"> 中度&nbsp;
+  <input  id="Con1Severe" type="radio" name="severity" value="Severe"> 重度  &nbsp;&nbsp;
+
+     發病年齡: <input type="text" id="Con1Age" />  <br/>
+
+  
+  
+</body>
+<script >
+    document.getElementById("FHIRPtionID").value = getCookie("patientID");
+    document.getElementById("name").value = getCookie("patientName");
+
+</script>
+</html>
