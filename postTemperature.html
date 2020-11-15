@@ -15,11 +15,11 @@
    
     var jsonStr = JSON.stringify(bodyTemperature);
    // alert(jsonStr);
-    var url = "http://hapi.fhir.org/baseR4/Observation";
+   // var url = "http://hapi.fhir.org/baseR4/Observation";
     var apiURL;
     apiURL = FHIRrootURL + '/' + "Observation";
 
-    HTTPPostData(url,jsonStr);
+    HTTPPostData(apiURL,jsonStr);
    } 
   
 	
