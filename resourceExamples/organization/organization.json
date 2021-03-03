@@ -1,0 +1,18 @@
+{
+  "resourceType": "Organization",
+  "name": "Volunteer virtual hospital ",
+  "telecom": [
+    {
+      "system": "phone",
+      "value": "+886 278565301",
+      "use": "mobile"
+    },
+    {
+      "system": "email",
+      "value": "chhsiao@gms.tcu.edu.tw",
+      "use": "work"
+    }
+  ]
+}
+
+

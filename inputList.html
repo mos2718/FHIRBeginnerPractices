@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+   
+  <script src="setting.js"></script>
+  <script src="Cookie.js"></script> 
+  <script src="HTTP2019.js"></script>
+ <script>
+
+
+
+</script>	
+	
+</head>
+<body style="height: 780px">
+    名字:
+    <input type="text" name="pateintName" value="Mickey" id="name"/> &nbsp;
+    FHIR patient id:
+    <input type="text"  value="unknown" id="FHIRPtionID"/>  <br/>
+    <h2>FHIR 健康紀錄輸入範例</h2>
+    <h2>問題健康狀況</h2>
+     <ul>
+      <li><a href="postCondition.html"> 哮喘</a></li>
+      
+     </ul>
+     <h2>生理量測</h2>
+     <ul>
+       <li><a href="postTemperature.html"> 新增體溫</a></li>
+      </ul>
+     <h2>問卷</h2>
+     <ul>
+      
+      <li><a href="postADL.html"> ADL 問卷</a></li>
+      <li><a href="postADL2.html">ADL 問卷(較高階程式寫法)</a></li>
+     </ul>
+
+   
+  
+  
+</body>
+<script >
+    document.getElementById("FHIRPtionID").value = getCookie("patientID");
+    document.getElementById("name").value = getCookie("patientName");
+
+</script>
+</html>

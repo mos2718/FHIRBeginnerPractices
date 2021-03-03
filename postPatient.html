@@ -16,16 +16,17 @@
           }
          ],
          "gender": "",
-         "birthDate": "1924-10-10",
+         "birthDate": "1924-10-10",      
          "managingOrganization": {
-             "reference": "Organization/632757"
-         }
+             "reference": "Organization/1921071"
+         } 
      };
      
 	 
    function postData() {
      /*   var data = myObj.valueQuantity.value;
        alert(data);  */
+      // alert("aaaa");
        myObj.name[0].family = document.getElementById("familyName").value;
        myObj.name[0].given[0] = document.getElementById("givenName").value;
        myObj.name[0].text =  myObj.name[0].family + myObj.name[0].given[0];
@@ -38,11 +39,11 @@
            {myObj.gender = "female";    }  
 
        var jsonStr = JSON.stringify(myObj);
-     //  alert(jsonStr);
+       alert(jsonStr);
 
        var apiURL;
        apiURL = FHIRrootURL + '/' + "Patient";
-     //  alert(apiURL);
+      // alert(apiURL);
        HTTPPostData(apiURL, jsonStr);
      
 	

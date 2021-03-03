@@ -1,0 +1,78 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <style type="text/css">
+        #Button1 {
+            height: 43px;
+            width: 140px;
+        }
+        #Button2 {
+            height: 43px;
+            width: 140px;
+        }
+        #Button3 {
+            height: 43px;
+            width: 140px;
+        }		
+        #TextArea1 {
+            height: 666px;
+            width: 1003px;
+        }
+  
+    </style>
+	<script src="setting.js"></script>
+    <script src="HTTP2019.js"></script>
+     <script>
+function postData() {
+    var dataString = document.getElementById("TextArea1").value;
+    var resourceID = document.getElementById("resource");
+	var selected = resourceID.options[resource.selectedIndex].text;
+	var apiURL;
+    apiURL =FHIRrootURL + '/'  + selected; 
+    alert(dataString);
+	 HTTPPostData(apiURL, dataString ); 
+   // + '/' + IdValue;
+	
+	
+	}
+
+
+function manageResponseRet()
+{  document.getElementById("TextArea1").value = ret;
+	}	
+    
+
+</script>	
+	
+</head>
+<body style="height: 780px">
+Resource :
+	<select id="resource">
+        <option>Patient</option>
+        <option>Person</option>	 	
+		<option>Organization</option>	
+		<option>DiagnosticReport</option>
+        <option>Condition</option>			
+        <option>Observation</option>	
+        <option>Encounter</option>
+        <option>Media</option>
+        <option>Practitioner</option>		
+        <option>PractitionerRole</option>	
+        <option>List</option>
+        <option>Location</option>	
+        <option>Schedule</option>	
+        <option>Slot</option>
+        <option>ServiceRequest</option>		
+	</select><br>
+    <p>
+        <input id="Button1" onclick="postData()"  type="button" value="postData" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+     
+
+    <p>
+        <textarea id="TextArea1" name="S1"></textarea></p>
+  
+</body>
+
+</html>

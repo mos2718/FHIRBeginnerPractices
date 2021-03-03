@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <style type="text/css">
+        #Button1 {
+            height: 43px;
+            width: 140px;
+        }
+        table, th, td {
+                 border: 1px solid black;         }  
+    </style>
+ <script src="HTTP2019.js"></script>   
+ <script src="Cookie.js"></script> 
+ <script src="addTableEvent.js"></script>
+ <script>	
+  var myObj; 
+  function callBack() { 
+        //alert(ret);
+        myObj= JSON.parse(ret);  
+    } 
+
+     HTTPGetData("http://hapi.fhir.org/baseR4/Patient?organization=1921071");
+ </script>
+ <script>
+	  
+  function rowClickFunction(cid) {
+        //  alert("id:" + cid);
+      setCookie("patientID", cid, 1);
+
+         // match clicked id with JSON data id
+         for (var i = 0; i < myObj.entry.length; i++) {
+             if (cid == myObj.entry[i].resource.id) {
+                 //  alert(myObj.entry[i].resource.name[0].text);
+                 setCookie("patientName", myObj.entry[i].resource.name[0].text, 1);
+                 setCookie("gender", myObj.entry[i].resource.gender, 1);
+             }
+         }
+         window.open("inputList.html");
+     }
+  
+
+function showData() {
+                     //    var data = myObj.entry[0].resource.name[0].text;  //name[0].text;
+                     //    alert(data);
+                 
+				var tableStr = "<tr> <th >id</th><th>name</th><th>gender</th><th>birthDate</th></tr>";
+
+                for (i = 0; i <myObj.entry.length; i++) {
+                     // alert(myObj[i].name);
+                    var trStr = "<tr>";
+
+                    trStr = trStr + "<td>";
+                    trStr = trStr + myObj.entry[i].resource.id;
+                    trStr = trStr + "</td>";
+
+                    trStr = trStr + "<td>";
+                    trStr = trStr + myObj.entry[i].resource.name[0].text;
+                    trStr = trStr + "</td>";
+
+                    trStr = trStr + "<td>";
+                    trStr = trStr +myObj.entry[i].resource.gender;
+                    trStr = trStr + "</td>";
+
+                    trStr = trStr + "<td>";
+                    trStr = trStr + myObj.entry[i].resource.birthDate;
+                    trStr = trStr + "</td>";
+
+                    trStr = trStr + "</tr>";
+                    tableStr = tableStr + trStr;
+                }
+  
+                document.getElementById("t1").innerHTML = tableStr;
+                addRowHandlers("t1");   // add event to table t1
+              
+            }
+   </script>			
+
+</head>
+<body style="height: 780px">
+
+      <p>
+        <h3>請先按 get patient 按鈕，再點選表格中的病人</h3> 
+        <input id="Button1" onclick="showData();" type="button" value="get patient" /></p>
+        
+        <table id = "t1"   />
+</body>
+
+</html>

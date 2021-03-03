@@ -23,7 +23,7 @@ var bodyTemperature = {
     },
     "issued": "2013-04-04T13:27:00",
     "valueQuantity": {
-        "value": 36.5,
+        "value": 0,
         "unit": "degrees C",
         "system": "http://unitsofmeasure.org",
         "code": "Cel"

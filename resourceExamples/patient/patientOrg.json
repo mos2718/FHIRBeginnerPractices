@@ -1,0 +1,20 @@
+
+
+{
+  "resourceType": "Patient",
+  "name": [
+  {
+  "use": "official",
+  "text": "林帶玉",
+  "family": "林",
+  "given": ["林帶玉"]
+  } ],
+  "gender": "female",
+  "birthDate": "1773-01-21",
+  "managingOrganization": {
+    "reference": "Organization/1921071"
+  }
+}
+
+
+

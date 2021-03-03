@@ -1,1 +1,1 @@
-﻿var FHIRrootURL = "http://hapi.fhir.org/baseR4";
+﻿var FHIRrootURL ="http://hapi.fhir.org/baseR4";
