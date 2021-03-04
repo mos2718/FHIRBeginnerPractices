@@ -21,6 +21,7 @@ function HTTPPostData(urlStr, dataStr ) {
     HttpObj.setRequestHeader("Content-type", "application/json+fhir");
    // HttpObj.setRequestHeader("Content-type", "application/xml+fhir");
     HttpObj.onreadystatechange = function () {
+        //alert(HttpObj.readyState);
         if (HttpObj.readyState === 4) {
             ret = HttpObj.responseText;
           

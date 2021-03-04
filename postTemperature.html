@@ -9,20 +9,18 @@
   <script src="HTTP2019.js"></script>
   <script src="Temperature.js"></script>
  <script>
-
   
 	 
-   function postData() {
-    alert(bodyTemperature.valueQuantity.);
+   function postData()
+   {
     bodyTemperature.valueQuantity.value = parseFloat(document.getElementById("bodyTemperature").value);
-   /* console.log(bodyTemperature.valueQuantity.value + typeof bodyTemperature.valueQuantity.value);
-    console.log(bodyTemperature.referenceRange[0].high.value + typeof bodyTemperature.referenceRange[0].high.value);
-    bodyTemperature.subject.reference += document.getElementById("id").value;
-    bodyTemperature.subject.display = document.getElementById("name").value;  */
+    bodyTemperature.subject.reference =  "Patient/" + document.getElementById("FHIRPtionID").value;
+    bodyTemperature.subject.display = document.getElementById("name").value;  
     var jsonStr = JSON.stringify(bodyTemperature);
-   // alert(jsonStr);
-    var url = "http://hapi.fhir.org/baseR4/Observation";
-    HTTPPostData(url,jsonStr);
+    //alert(jsonStr);
+    var apiURL;
+    apiURL = FHIRrootURL + '/' + "Observation";
+    HTTPPostData( apiURL,jsonStr);
    } 
   
 	

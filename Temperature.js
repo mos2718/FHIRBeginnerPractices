@@ -19,7 +19,8 @@ var bodyTemperature = {
         "text": "Temperature"
     },
     "subject": {
-        "reference": "Patient/example"
+        "reference": "Patient/example",
+        "display":""
     },
     "issued": "2013-04-04T13:27:00",
     "valueQuantity": {
